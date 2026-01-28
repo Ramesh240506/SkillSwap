@@ -1,0 +1,14 @@
+# Node modules for any folder
+**/node_modules/
+
+# Env files anywhere
+**/.env*
+# This covers: .env, .env.local, .env.development, .env.production in any folder
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
