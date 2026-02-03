@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    // Environment & Module
+    "module": "NodeNext",
+    "target": "ES2020",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+
+    // File structure
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Output
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Type checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
