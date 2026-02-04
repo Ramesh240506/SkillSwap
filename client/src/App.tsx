@@ -1,12 +1,18 @@
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import AppLayout from "./layout/AppLayout";
 
 function App() {
+
+
   return (
-    <>
-      <h1 className="text-3xl font-bold text-red-500">
-        Tailwind is working 🚀
-      </h1>
-    </>
+    <div>
+      <BrowserRouter>
+      
+      <AppLayout />
+      
+      </BrowserRouter>
+    </div>
   );
 }
 

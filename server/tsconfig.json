@@ -1,25 +1,24 @@
 {
   "compilerOptions": {
-    // Environment & Module
     "module": "NodeNext",
     "target": "ES2020",
     "moduleResolution": "NodeNext",
-    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
 
-    // File structure
     "rootDir": "./src",
     "outDir": "./dist",
 
-    // Output
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Type checking
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src/**/*", "src/types/**/*.d.ts"],
+  "ts-node": {
+    "files": true
+  }
 }

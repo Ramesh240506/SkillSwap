@@ -1,3 +1,4 @@
+/// <reference path="./types/express.d.ts" />
 import dotenv from 'dotenv';
 import { connectDB } from './config/db';
 import app from './app';
