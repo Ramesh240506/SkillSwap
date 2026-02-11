@@ -1,4 +1,5 @@
 export interface OfferSkillPayload {
+  teacherName: string;
   skillName: string;
   category: string;
   description: string;
@@ -12,4 +13,21 @@ export interface OfferSkillPayload {
   totalCredits: number;
   rating: number;
   reviewCount: number;
+}
+
+export interface SkillApiResponse {
+  _id: string;
+  skillName: string;
+  category: string;
+  teacherName: string;
+  rating: number;
+  reviewCount: number;
+  experienceLevel: "Beginner" | "Intermediate" | "Advanced" | "Expert";
+  creditsPerSession: number;
+  totalSessions: number;
+  sessionDuration: number;
+  description: string;
+  availableDays: string[];
+  availableTimeSlots: string[];
+  teacherBio?: string;
 }

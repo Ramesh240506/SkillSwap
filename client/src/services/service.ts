@@ -47,3 +47,35 @@ export const getOfferedSkills = async () => {
     throw error;
   }
 }
+
+export const getCurrentUser = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/auth/getUser`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    });
+    return response.data.user;
+  }
+  catch (error) {
+    console.error("getCurrentUser error:", error);
+  }
+}
+
+export const createBooking = async (bookingData: {
+  offeringId: string;
+  sessionDate: string[];
+  timeSlot: string;
+}) => {
+  const response = await axios.post(`${API_URL}/createBooking`, bookingData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }
+  });
+  return response.data;
+}
+
+export const getOfferingAvailability = async (id: string) => {
+  const res = await axios.get(`${API_URL}/offerings/${id}`);
+  return res.data;
+};

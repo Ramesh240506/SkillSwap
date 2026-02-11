@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { OfferSkills } from "./OfferSkills";
+import { getCurrentUser } from "../../services/service";
 
 const DashboardCard = () => {
   const [offerSkillOpen, setOfferSkillOpen] = useState(false);
   
   // Mock user data - in real app would come from auth context
-  const user = {
-    name: "John",
-    role: "both", // learner, teacher, or both
-    credits: 15,
+  const [user, setUser] = useState<{ name: string; credits: number }>
+  ({ name: "John Doe", credits: 120 });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getCurrentUser();
+        if (userData) {
+          setUser(prevUser => ({
+            ...prevUser,
+            name: userData.name,
+            credits: userData.credits 
+          })); // Assuming credits is part of user data
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
   };
-  
+    fetchUser();
+  }, []);
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}

@@ -5,8 +5,7 @@ import Auth from "../pages/Auth";
 import Skills from "../pages/Skills";
 import Dashboard from "../pages/Dashboard";
 import { OfferSkills } from "../components/dashboard/OfferSkills";
-
-
+import SkillDetail from "../pages/SkillDetail";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -21,7 +20,11 @@ const AppLayout = () => {
         <Route path="/landing" element={<Landing />} />
         <Route path="/skills" element={<Skills />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/offerskills" element={<OfferSkills open={true} onOpenChange={() => {}} />} />
+        <Route
+          path="/offerskills"
+          element={<OfferSkills open={true} onOpenChange={() => {}} />}
+        />
+        <Route path="/skilldetail/:id" element={<SkillDetail />} />
       </Routes>
     </>
   );

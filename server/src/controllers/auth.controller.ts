@@ -42,3 +42,11 @@ export const loginUser = async (req:Request, res:Response) => {
     res.status(200).json({ accessToken,user:{ _id: user._id, name: user.name, email: user.email } });
 }
 
+export const getUser= async (req:Request, res:Response) => {
+    const userId = req.user!._id;
+    const user = await User.findById(userId);
+    if(!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user:{ _id: user._id, name: user.name, email: user.email } });
+}

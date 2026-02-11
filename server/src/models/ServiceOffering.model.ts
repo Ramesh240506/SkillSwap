@@ -2,7 +2,8 @@
 import { Schema, model, Types, Document } from "mongoose";
 
 export interface IServiceOffering extends Document {
-  providerId: Types.ObjectId;       // The user offering this skill
+  providerId: Types.ObjectId;
+  teacherName:string;       // The user offering this skill
   skillName: string;
   category: string;
   description: string;
@@ -24,6 +25,7 @@ export interface IServiceOffering extends Document {
 const ServiceOfferingSchema = new Schema<IServiceOffering>(
   {
     providerId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    teacherName: { type: String, required: true },
     skillName: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },

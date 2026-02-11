@@ -11,12 +11,12 @@ const features = [
   {
     icon: ArrowRightLeft,
     title: "Skill Exchange",
-    description: "Trade your knowledge directly. Teach React, learn Guitar—it's that simple.",
+    description: "Trade your knowledge directly. Teach React, learn Guitar it's that simple.",
   },
   {
     icon: Coins,
     title: "Credit System",
-    description: "Earn 1 credit for every hour you teach. Spend credits to learn new skills.",
+    description: "Earn credits by teaching, spend them on learning. A fair economy for everyone.",
   },
   {
     icon: Star,
@@ -36,7 +36,7 @@ const features = [
   {
     icon: MessageCircle,
     title: "Direct Communication",
-    description: "Chat with teachers before booking. Discuss goals and expectations.",
+    description: "Chat with teachers and learners to clarify details. No middlemen, just direct connection.",
   },
 ];
 

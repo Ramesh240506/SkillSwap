@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { OfferSkillPayload } from "../types/skills.types";
 import { getOfferedSkills } from "../services/service";
 
@@ -159,7 +159,7 @@ const Skills = () => {
     setCreditsFilter(credits);
     applyFilters(searchQuery, categoryFilter, ratingFilter, credits);
   };
-
+  const navigate=useNavigate();
   useEffect(() => {
     const getSkills = async () => {
       // Fetch skills from backend API
@@ -186,7 +186,7 @@ const Skills = () => {
             totalCredits: skill.totalCredits,
             rating: skill.rating || 0,
             reviewCount: skill.reviewCount || 0,
-            teacherName: skill.providerId?.name || "Anonymous", // Extract from populated provider
+            teacherName: skill.teacherName || "Anonymous", // Extract from populated provider
           })
         );
         
@@ -435,7 +435,7 @@ const Skills = () => {
 
                   {/* Book Button */}
                   <Link
-                    to={`/skills/${skill.id}`}
+                    to={`/skilldetail/${skill.id}`}
                     className="mt-4 w-full block text-center px-4 py-2.5 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors"
                   >
                     View Details

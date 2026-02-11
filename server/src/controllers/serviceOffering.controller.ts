@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { ServiceOffering } from "../models/ServiceOffering.model";
+import { User } from "../models/User.modal";
+import { Booking } from "../models/ServiceBooking.model";
+import mongoose from "mongoose";
 
 export const createSkillOffering = async (req: Request, res: Response) => {
   try {
-    // 1️⃣ Extract data from body
     const {
       skillName,
       category,
@@ -17,10 +19,10 @@ export const createSkillOffering = async (req: Request, res: Response) => {
       prerequisites,
     } = req.body;
 
-    // 2️⃣ Get provider from auth middleware
     const providerId = req.user!._id;
-
-    // 3️⃣ Validate
+    const provider= await User.findById(providerId).select("name");
+    const teacherName = provider?.name || "Unknown";
+   
     if (
       !providerId ||
       !skillName ||
@@ -38,6 +40,7 @@ export const createSkillOffering = async (req: Request, res: Response) => {
    
     const totalCredits = creditsPerSession * totalSessions;
     const allowedData = {
+      teacherName,
       skillName,
       category,
       description,
@@ -74,4 +77,43 @@ export const getSkillOfferings = async (req: Request, res: Response) => {
     console.error("Error fetching skill offerings:", error);
     return res.status(500).json({ message: "Internal server error" });
     }
+};
+
+
+export const getOfferingAvailability = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || typeof id !== 'string' || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid offering ID" });
+    }
+
+    const offering = await ServiceOffering.findById(id);
+
+    if (!offering) {
+      return res.status(404).json({ message: "Offering not found" });
+    }
+
+    const bookings = await Booking.find({
+      offeringId: new mongoose.Types.ObjectId(id),
+      status: "CONFIRMED" as const,
+    });
+
+    // Extract all booked date + time combinations
+    const bookedSlots = bookings.flatMap((booking) =>
+      booking.sessionDate.map((date: string) => ({
+        date,
+        timeSlot: booking.timeSlot,
+      }))
+    );
+
+    return res.status(200).json({
+      offering,
+      bookedSlots,
+    });
+
+  } catch (error) {
+    console.error("Error fetching availability:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
