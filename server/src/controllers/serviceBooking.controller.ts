@@ -65,3 +65,55 @@ export const createBooking = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getMyOfferedCourses = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!._id;
+
+    const courses = await ServiceOffering.find({ providerId: userId });
+
+    res.status(200).json({ courses });
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getMySessions = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!._id;
+    
+    const bookings = await Booking.find({ requesterId: userId })
+      .populate({
+        path: "offeringId",
+        populate: {
+          path: "providerId",
+          select: "name"
+        }
+      });
+
+    // Map backend status to frontend status
+    const statusMap: Record<string, string> = {
+      'CONFIRMED': 'active',
+      'COMPLETED': 'completed',
+      'CANCELLED': 'disputed'
+    };
+
+    // Transform bookings to session format
+    const sessions = bookings.map((booking: any) => ({
+      id: booking._id.toString(),
+      skillName: booking.offeringId?.skillName || "Unknown Skill",
+      partnerName: booking.offeringId?.providerId?.name || "Unknown",
+      status: statusMap[booking.status] || booking.status.toLowerCase(),
+      credits: booking.creditsUsed,
+      role: "learner",
+      scheduledDate: Array.isArray(booking.sessionDate) ? booking.sessionDate.join(", ") : booking.sessionDate,
+      scheduledTime: booking.timeSlot
+    }));
+
+    res.status(200).json({ sessions });
+  } catch (error) {
+    console.error("Error fetching sessions:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

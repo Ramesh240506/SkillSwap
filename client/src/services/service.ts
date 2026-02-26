@@ -79,3 +79,23 @@ export const getOfferingAvailability = async (id: string) => {
   const res = await axios.get(`${API_URL}/offerings/${id}`);
   return res.data;
 };
+
+
+
+
+export const getMyOfferedCourses = async () => {
+  const res = await axios.get(`${API_URL}/myofferedcourses`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }
+  });
+  return res.data;
+}
+export const getMySessions = async () => {
+  const res = await axios.get(`${API_URL}/mysessions`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+    }
+  });
+  return res.data;
+}
